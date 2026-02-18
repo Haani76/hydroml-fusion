@@ -1,0 +1,66 @@
+# HydroML-Fusion Configuration
+
+project:
+  name: "HydroML-Fusion"
+  version: "2.0.0"
+  description: "Multi-Model Ensemble Hydrological Forecasting System"
+
+basin:
+  # We'll use a real US basin for this project
+  usgs_site: "02472000"  # Leaf River near Collins, MS (classic test basin)
+  name: "Leaf River"
+  latitude: 31.71
+  longitude: -89.42
+  area_km2: 1950.0
+  state: "Mississippi"
+
+data:
+  period:
+    start: "2010-01-01"
+    end: "2020-12-31"
+    calibration_end: "2018-12-31"
+  
+  paths:
+    raw: "data/raw"
+    processed: "data/processed"
+    forecasts: "data/forecasts"
+
+models:
+  gr4j:
+    parameters:
+      x1_bounds: [100, 1200]
+      x2_bounds: [-5, 3]
+      x3_bounds: [20, 300]
+      x4_bounds: [1.1, 2.9]
+  
+  lstm:
+    sequence_length: 30
+    hidden_size: 64
+    num_layers: 2
+    dropout: 0.2
+    learning_rate: 0.001
+    epochs: 50
+    batch_size: 32
+  
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+
+ensemble:
+  weights: "auto"  # or specify [0.3, 0.3, 0.4] for GR4J, XGBoost, LSTM
+  uncertainty_method: "monte_carlo_dropout"
+  n_samples: 100
+
+forecasting:
+  lead_time_days: 10
+  update_interval_hours: 6
+  gfs_variables:
+    - temperature_2m
+    - precipitation
+    - relative_humidity
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["*"]
