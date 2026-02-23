@@ -1,7 +1,7 @@
 cat > README.md << 'EOF'
 #  HydroML-Fusion: Multi-Model Ensemble Hydrological Forecasting System
 
-A production-ready hydrological modeling framework integrating physics-based models, machine learning, and deep learning with real-time forecasting capabilities and climate scenario analysis.
+A hydrological modeling framework integrating physics-based models, machine learning, and deep learning with real-time forecasting capabilities and climate scenario analysis.
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://python.org)
 
